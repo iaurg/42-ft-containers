@@ -8,6 +8,7 @@
 # include <tgmath.h>
 
 namespace ft {
+    // CLASS =======================================================================
     template<typename T, typename Alloc = std::allocator<T> >
     class vector {
         public:
@@ -60,7 +61,64 @@ namespace ft {
          * an unsigned integral type that can represent any non-negative value of difference_type.
          */
         typedef typename allocator_type::size_type size_type;
-    
+
+        // MEMBER FUNCTIONS ==========================================================
+        /**
+         * @brief Default Construct a new vector object
+         * 
+         * @param alloc 
+         */
+        explicit vector(const allocator_type& alloc = allocator_type()) : _alloc(alloc) {
+            _size = 0;
+            _capacity = 0;
+            _data = NULL;
+        }
+
+        /**
+         * @brief Fill Construct a new vector object
+         * 
+         * @param n 
+         * @param val 
+         * @param alloc 
+         */
+        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc) {
+            _size = n;
+            _capacity = n;
+            _data = _alloc.allocate(n);
+            for (size_type i = 0; i < n; i++)
+                _alloc.construct(_data + i, val);
+        }
+
+        /**
+         * @brief Range Construct a new vector object
+         * 
+         * @param first 
+         * @param last 
+         * @param alloc 
+         * 
+         * @tparam InputIterator if InputIterator is an integral type, the container
+         * is initialized with first copies of last converted to value_type.
+         */
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0) : _alloc(alloc) {
+            _size = 0;
+            _capacity = 0;
+            _data = NULL;
+            assign(first, last);
+        }
+
+        /**
+         * @brief Copy Construct a new vector object
+         * 
+         * @param x 
+         */
+        vector(const vector& x) {
+            _size = 0;
+            _capacity = 0;
+            _data = NULL;
+            *this = x;
+        }
+    };
 } // namespace ft
 
 #endif // ********************************************** VECTOR_HPP end //
