@@ -1,31 +1,31 @@
-NAME = ft_containers
+CONTAINER = main
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
 REMOVE = rm -rf
 
-SAFE_MKDIR = mkdir -p
+SOURCES_PATH = $(PWD)/tests
 
-SOURCES_PATH = $(PWD)
-
-SOURCE_FILES =	$(shell ls ./ | grep .cpp$)
+SOURCE_FILES =	$(shell ls ./tests | grep .cpp$)
 
 SOURCES = $(addprefix $(SOURCES_PATH)/,$(SOURCE_FILES))
 
-OBJECTS = ${SOURCES:.cpp=.o}
+OBJECTS = ${SOURCES:%.cpp=%.o}
 
-.PHONY: all run valgrind re fclean clean
+RM = rm -f
 
-all: $(NAME)
+all: $(CONTAINER)
 
-$(NAME): $(OBJECTS)
-	@$(CC) $(CFLAGS) \
-	-w  $(OBJECTS) \
-	-o $(NAME) \
+$(CONTAINER):  $(OBJECTS)
+	$(CC) $(CFLAGS) -w $(OBJECTS) -o $(CONTAINER)
 
-$./%.o: $(SOURCES_PATH)/%.cpp
-	@$(CC) $(CFLAGS) -I $(INCLUDES_PATH) -o $@ -c $<
+./tests/%.o: ./tests/%.cpp
+	${CC} ${CFLAGS} -c $< -o $@
+
+vector: $(CONTAINER)
+	./$(CONTAINER) vector
 
 re:	fclean all
 
@@ -34,3 +34,6 @@ clean:
 
 fclean: clean
 	@$(REMOVE) $(NAME)
+	@$(REMOVE) $(CONTAINER)
+
+.PHONY: all run ${CONTAINER} re fclean clean
