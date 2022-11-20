@@ -19,6 +19,8 @@ namespace ft {
      */
     template<bool B, class T = void>
     struct enable_if {};
+    struct false_type {};
+    struct true_type {};
 
     /**
      * @brief This is the primary template of the enable_if metafunction. It is defined such that enable_if is a type only if B is true.
