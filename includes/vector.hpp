@@ -6,6 +6,7 @@
 # include <algorithm>
 # include <cstddef>
 # include <tgmath.h>
+# include "./utils.hpp"
 
 namespace ft {
     // CLASS =======================================================================
@@ -61,6 +62,13 @@ namespace ft {
          * an unsigned integral type that can represent any non-negative value of difference_type.
          */
         typedef typename allocator_type::size_type size_type;
+        
+        /*
+        typedef typename const_reverse_iterator<value_type>::type const_reverse_iterator;
+        typedef typename reverse_iterator<value_type>::type reverse_iterator;
+        typedef typename const_iterator<value_type>::type const_iterator;
+        typedef typename iterator<value_type>::type iterator;
+        */               
 
         protected:
         // ATTRIBUTES =================================================================
@@ -71,32 +79,22 @@ namespace ft {
 
 
         // CONSTRUCTORS ==========================================================
-
+        public:
         /**
          * @brief Default Construct a new vector object
          * 
          * @param alloc 
          */
-        explicit vector(const allocator_type& alloc = allocator_type()) : _alloc(alloc) {
-            _size = 0;
-            _capacity = 0;
-            _data = NULL;
-        }
+        explicit vector(const allocator_type& alloc = allocator_type());
 
         /**
          * @brief Fill Construct a new vector object
          * 
          * @param n 
-         * @param val 
-         * @param alloc 
+         * @param val
+         * @param alloc
          */
-        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _alloc(alloc) {
-            _size = n;
-            _capacity = n;
-            _data = _alloc.allocate(n);
-            for (size_type i = 0; i < n; i++)
-                _alloc.construct(_data + i, val);
-        }
+        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 
         /**
          * @brief Range Construct a new vector object
@@ -109,24 +107,14 @@ namespace ft {
          * is initialized with first copies of last converted to value_type.
          */
         template <class InputIterator>
-        vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0) : _alloc(alloc) {
-            _size = 0;
-            _capacity = 0;
-            _data = NULL;
-            assign(first, last);
-        }
+        vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
 
         /**
          * @brief Copy Construct a new vector object
          * 
          * @param x 
          */
-        vector(const vector& x) {
-            _size = 0;
-            _capacity = 0;
-            _data = NULL;
-            *this = x;
-        }
+        vector(const vector& x);
 
         // DESTRUCTOR =============================================================
 
@@ -134,11 +122,80 @@ namespace ft {
          * @brief Destroy the vector object
          * 
          */
-        ~vector() {
-            clear();
-            _alloc.deallocate(_data, _capacity);
-        }
+        ~vector();
+
+        // OPERATORS =============================================================
+        
+        /**
+         * @brief Copy assignment operator
+         * 
+         * @param x 
+         * @return vector& 
+         */
+        vector& operator=(const vector& x);
+
+        // ACCESSORS =============================================================
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector container.
+         * 
+         * @param n 
+         * @return reference 
+         */
+        reference operator[](size_type n);
+
+        // MODIFIERS =============================================================
+
+        /**
+         * @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly.
+         * 
+         * @tparam InputIterator 
+         * @param first 
+         * @param last 
+         */
+        template <class InputIterator>
+        void assign(InputIterator first, InputIterator last);
+
+        /**
+         * @brief Assigns new contents to the vector, replacing its current contents, and modifying its size accordingly.
+         * 
+         * @param n 
+         * @param val 
+         */
+        void assign(size_type n, const value_type& val);        
+
+        /**
+         * @brief Adds a new element at the end of the vector, after its current last element.
+         * The content of val is copied (or moved) to the new element.
+         * 
+         * @param val 
+         */
+        void push_back(const value_type& val);
+
+        /**
+         * @brief Removes the last element in the vector, effectively reducing the container size by one.
+         * 
+         */
+        void pop_back();
+
+       /**
+        * @brief The vector is extended by inserting new elements before the element at the specified position,
+        * 
+        * @param n 
+        */
+        void reserve(size_type n);
+
+        /**
+         * @brief Return the number of elements that the vector has
+         * 
+         * @param n 
+         */
+        void size(size_type n);
+
+
     };
 } // namespace ft
+
+#include "vector.tpp"
 
 #endif // ********************************************** VECTOR_HPP end //
