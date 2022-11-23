@@ -77,7 +77,6 @@ namespace ft {
             size_type _capacity;
             allocator_type _alloc;
 
-
         // CONSTRUCTORS ==========================================================
         public:
         /**
@@ -188,11 +187,13 @@ namespace ft {
         /**
          * @brief Return the number of elements that the vector has
          * 
-         * @param n 
          */
-        void size(size_type n);
-
-
+        size_type size() const;        
+        
+        /**
+         * @brief Checks if the container has no elements, i.e. whether begin() == end().
+         */
+        bool empty(void);
     };
 } // namespace ft
 
