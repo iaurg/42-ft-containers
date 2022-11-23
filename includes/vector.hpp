@@ -133,6 +133,12 @@ namespace ft {
          */
         vector& operator=(const vector& x);
 
+        /**
+         * @brief Check if lhs is different from rhs
+         * 
+        */
+        bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
         // MODIFIERS =============================================================
 
         /**

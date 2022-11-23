@@ -69,6 +69,12 @@ vector<T, Alloc> &vector<T, Alloc>::operator=(const vector &x)
     return (*this);
 };
 
+template<typename T, typename Alloc>
+bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+{
+    return (!(lhs == rhs));
+};
+
 // MODIFIERS ====================================================================
 
 template<typename T, typename Alloc>

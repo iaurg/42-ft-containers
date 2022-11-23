@@ -33,13 +33,12 @@ static void copy_constructor(void)
 	check("v1 == v2", (v1 == v2));
 	check("v3 == v4", (v3 == v4));
 	check("v2 != v4", (v2 != v4));
-	// check("v1 != v3", (v1 != v3));
+	check("v1 != v3", (v1 != v3));
 }
 
 void	test_vector(void)
 {
 	print_header("Vector");
-
 	default_constructor();
 	copy_constructor();
 }
