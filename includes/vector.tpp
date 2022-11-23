@@ -116,15 +116,10 @@ typename vector<T, Alloc>::size_type vector<T, Alloc>::size() const
     return (this->_size);
 };
 
-        for (size_type i = this->_size; i < n; i++)
-            this->_alloc.construct(this->_data + i, value_type());
-    }
-    else
-    {
-        for (size_type i = n; i < this->_size; i++)
-            this->_alloc.destroy(this->_data + i);
-    }
-    this->_size = n;
+template<typename T, typename Alloc>
+bool vector<T, Alloc>::empty(void)
+{
+    return (this->_size == 0);
 };
 
 // ACCESSORS ====================================================================
