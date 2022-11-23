@@ -111,12 +111,11 @@ void vector<T, Alloc>::reserve(size_type n)
 };
 
 template<typename T, typename Alloc>
-void vector<T, Alloc>::size(size_type n)
+typename vector<T, Alloc>::size_type vector<T, Alloc>::size() const
 {
-    if (n > this->_capacity)
-        this->reserve(n);
-    if (n > this->_size)
-    {
+    return (this->_size);
+};
+
         for (size_type i = this->_size; i < n; i++)
             this->_alloc.construct(this->_data + i, value_type());
     }
