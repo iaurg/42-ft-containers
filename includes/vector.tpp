@@ -50,7 +50,7 @@ vector<T, Alloc>::~vector()
     this->_alloc.deallocate(this->_data, this->_capacity);
 };
 
-// ASSIGNATION OPERATOR ========================================================
+// OPERATORS ========================================================
 
 template<typename T, typename Alloc>
 vector<T, Alloc> &vector<T, Alloc>::operator=(const vector &x)
@@ -92,6 +92,8 @@ void vector<T, Alloc>::push_back(const value_type &val)
     this->_alloc.construct(this->_data + this->_size, val);
     this->_size++;    
 };
+
+// CAPACITY ===============================================================
 
 template<typename T, typename Alloc>
 void vector<T, Alloc>::reserve(size_type n)

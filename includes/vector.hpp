@@ -133,16 +133,6 @@ namespace ft {
          */
         vector& operator=(const vector& x);
 
-        // ACCESSORS =============================================================
-
-        /**
-         * @brief Returns a reference to the element at position n in the vector container.
-         * 
-         * @param n 
-         * @return reference 
-         */
-        reference operator[](size_type n);
-
         // MODIFIERS =============================================================
 
         /**
@@ -177,13 +167,15 @@ namespace ft {
          */
         void pop_back();
 
+        // CAPACITY ===============================================================
+
        /**
         * @brief The vector is extended by inserting new elements before the element at the specified position,
         * 
         * @param n 
         */
         void reserve(size_type n);
-
+        
         /**
          * @brief Return the number of elements that the vector has
          * 
@@ -194,6 +186,16 @@ namespace ft {
          * @brief Checks if the container has no elements, i.e. whether begin() == end().
          */
         bool empty(void);
+
+        // ACCESSORS =============================================================
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector container.
+         * 
+         * @param n 
+         * @return reference 
+         */
+        reference operator[](size_type n);
     };
 } // namespace ft
 
