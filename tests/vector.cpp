@@ -1,39 +1,5 @@
 #include "../includes/tests.hpp"
 
-template <typename T>
-static void print_vector(T vec, std::string type)
-{
-	typename T::iterator it;
-
-	std::cout << BOLD << type << ", size: " << vec.size() << ", empty: " << vec.empty() << ", capacity: " << vec.capacity() << RESET << std::endl;
-	it = vec.begin();
-	while (it != vec.end())
-	{
-		std::cout << *it;
-		if (it + 1 != vec.end())
-			std::cout << " - ";
-		++it;
-	}
-	std::cout << std::endl;
-}
-
-template <typename T>
-static void print_vector_reverse(T vec, std::string type)
-{
-	typename T::iterator it;
-
-	std::cout << BOLD << type << ", size: " << vec.size() << ", empty: " << vec.empty() << ", capacity: " << vec.capacity() << RESET << std::endl;
-	it = vec.rbegin();
-	while (it != vec.rend())
-	{
-		std::cout << *it;
-		if (it + 1 != vec.rend())
-			std::cout << " - ";
-		++it;
-	}
-	std::cout << std::endl;
-}
-
 static void default_constructor(void)
 {
 	print_header("Default constructor");
