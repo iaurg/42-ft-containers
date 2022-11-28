@@ -1,4 +1,5 @@
 # 42-ft-containers
+
 The standard C++ containers have all a specific usage. To make sure you understand them, let’s re-implement them!
 
 ### STL Pocket Reference
@@ -8,6 +9,7 @@ The fundamental purpose of a container is to store multiple objects of the same 
 In C++, the containers are implemented as class templates. The firt template parameter is the type of the object that are to be stored in the container. You can use any type that has value semantics, which means obects must beahve as ordinary values in the same manner as integers or other fundamental types.
 
 Containers types:
+
 - Sequence containers: vector, list, deque, array, forward_list
 - Container adaptors: stack, queue, priority_queue
 - Associative containers: set, multiset, map, multimap
@@ -24,3 +26,8 @@ Sequence containers compare objects for equality using the equality operator (==
 **map**: A map (or dictionary) is an associative container that stores pairs of keys and associated objects. Pairs are stored in ascending order of keys. A map requires unique keys. The header is <map>.
 
 Associative containers compare objects for equivalence, which is slightly different from equality. For example, two strings may be equal, but not equivalent. The equivalence operator is used to compare objects for equivalence.
+
+## Documentation from the old STL
+
+[Stepanov Papers STL](https://web.archive.org/web/20160811224408/http://www.stepanovpapers.com/butler.hpl.hp/stl/stl/)
+Thanks @vcwild for the link
