@@ -159,6 +159,57 @@ namespace ft
          */
         void pop_back();
 
+        /**
+         * @brief The vector is extended by inserting new elements before the element at the specified position,
+         * effectively increasing the container size by the number of elements inserted.
+         *
+         * @param position
+         * @param val
+         * @return iterator
+         */
+        iterator insert(iterator position, const value_type &val);
+
+        /**
+         * @brief The vector is extended by inserting new elements before the element at the specified position,
+         * effectively increasing the container size by the number of elements inserted.
+         *
+         * @param position
+         * @param n
+         * @param val
+         * @return iterator
+         */
+        void insert(iterator position, size_type n, const value_type &val);
+
+        /**
+         * @brief The vector is extended by inserting new elements before the element at the specified position,
+         * effectively increasing the container size by the number of elements inserted.
+         *
+         * @tparam InputIterator
+         * @param position
+         * @param first
+         * @param last
+         * @return iterator
+         */
+        template <class InputIterator>
+        void insert(iterator position, InputIterator first, InputIterator last);
+
+        /**
+         * @brief Removes from the vector either a single element (position) or a range of elements ([first,last)).
+         *
+         * @param position
+         * @return iterator
+         */
+        iterator erase(iterator position);
+
+        /**
+         * @brief Removes from the vector either a single element (position) or a range of elements ([first,last)).
+         *
+         * @param first
+         * @param last
+         * @return iterator
+         */
+        iterator erase(iterator first, iterator last);
+
         // CAPACITY ===============================================================
 
         /**
@@ -203,6 +254,12 @@ namespace ft
          */
         void shrink_to_fit();
 
+        /**
+         * @brief Erases all elements from the vector.
+         *
+         */
+        void clear();
+
         // ACCESSORS =============================================================
 
         /**
@@ -220,6 +277,18 @@ namespace ft
          * @return const_reference
          */
         const_reference operator[](size_type n) const;
+
+        reference at(size_type n);
+
+        const_reference at(size_type n) const;
+
+        reference front();
+
+        const_reference front() const;
+
+        reference back();
+
+        const_reference back() const;
 
         // ITERATORS =============================================================
 

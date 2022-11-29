@@ -45,8 +45,7 @@ namespace ft
     template <typename T, typename Alloc>
     vector<T, Alloc>::~vector()
     {
-        for (size_type i = 0; i < this->_size; i++)
-            this->_alloc.destroy(this->_data + i);
+        clear();
         this->_alloc.deallocate(this->_data, this->_capacity);
     };
 
@@ -100,22 +99,99 @@ namespace ft
     void vector<T, Alloc>::push_back(const value_type &val)
     {
         if (this->_size == this->_capacity)
-        {
-            if (this->_capacity == 0)
-                this->_capacity = 1;
-            else
-                this->_capacity *= 2;
-            pointer tmp = this->_alloc.allocate(this->_capacity);
-            for (size_type i = 0; i < this->_size; i++)
-            {
-                this->_alloc.construct(tmp + i, this->_data[i]);
-                this->_alloc.destroy(this->_data + i);
-            }
-            this->_alloc.deallocate(this->_data, this->_size);
-            this->_data = tmp;
-        }
+            reserve(this->_capacity == 0 ? 1 : this->_capacity * 2);
         this->_alloc.construct(this->_data + this->_size, val);
         this->_size++;
+    };
+
+    template <typename T, typename Alloc>
+    void vector<T, Alloc>::pop_back()
+    {
+        if (this->_size == 0)
+            throw std::out_of_range("vector");
+        this->_alloc.destroy(this->_data + this->_size - 1);
+        this->_size--;
+    };
+
+    template <typename T, typename Alloc>
+    void vector<T, Alloc>::clear()
+    {
+        for (size_type i = 0; i < this->_size; i++)
+            this->_alloc.destroy(this->_data + i);
+        this->_size = 0;
+    };
+
+    template <typename T, typename Alloc>
+    void vector<T, Alloc>::assign(size_type n, const value_type &val)
+    {
+        clear();
+        reserve(n);
+        for (size_type i = 0; i < n; i++)
+            push_back(val);
+    };
+
+    template <typename T, class Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type &val)
+    {
+        size_type index = position - begin();
+        if (this->_size == this->_capacity)
+            reserve(this->_capacity == 0 ? 1 : this->_capacity * 2);
+        this->_alloc.construct(this->_data + this->_size, this->_data[this->_size - 1]);
+        for (size_type i = this->_size - 1; i > index; i--)
+            this->_data[i] = this->_data[i - 1];
+        this->_data[index] = val;
+        this->_size++;
+        return begin() + index;
+    };
+
+    template <typename T, typename Alloc>
+    void vector<T, Alloc>::insert(iterator position, size_type n, const value_type &val)
+    {
+        size_type pos = position - begin();
+        reserve(this->_size + n);
+        for (size_type i = this->_size; i > pos; i--)
+            this->_data[i + n - 1] = this->_data[i - 1];
+        for (size_type i = 0; i < n; i++)
+            this->_data[pos + i] = val;
+        this->_size += n;
+    };
+
+    template <typename T, typename Alloc>
+    template <typename InputIterator>
+    void vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last)
+    {
+        size_type pos = position - begin();
+        size_type n = last - first;
+        reserve(this->_size + n);
+        for (size_type i = this->_size; i > pos; i--)
+            this->_data[i + n - 1] = this->_data[i - 1];
+        for (size_type i = 0; i < n; i++)
+            this->_data[pos + i] = *first++;
+        this->_size += n;
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position)
+    {
+        size_type pos = position - begin();
+        for (size_type i = pos; i < this->_size - 1; i++)
+            this->_data[i] = this->_data[i + 1];
+        this->_alloc.destroy(this->_data + this->_size - 1);
+        this->_size--;
+        return begin() + pos;
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iterator last)
+    {
+        size_type pos = first - begin();
+        size_type n = last - first;
+        for (size_type i = pos; i < this->_size - n; i++)
+            this->_data[i] = this->_data[i + n];
+        for (size_type i = 0; i < n; i++)
+            this->_alloc.destroy(this->_data + this->_size - i - 1);
+        this->_size -= n;
+        return begin() + pos;
     };
 
     // CAPACITY ===============================================================
@@ -177,7 +253,8 @@ namespace ft
     {
         if (n > this->_capacity)
         {
-            pointer tmp = this->_alloc.allocate(n);
+            this->_capacity = n;
+            pointer tmp = this->_alloc.allocate(this->_capacity);
             for (size_type i = 0; i < this->_size; i++)
             {
                 this->_alloc.construct(tmp + i, this->_data[i]);
@@ -185,7 +262,6 @@ namespace ft
             }
             this->_alloc.deallocate(this->_data, this->_size);
             this->_data = tmp;
-            this->_capacity = n;
         }
     };
 
@@ -217,6 +293,46 @@ namespace ft
     typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[](size_type n) const
     {
         return (this->_data[n]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::reference vector<T, Alloc>::at(size_type n)
+    {
+        if (n >= this->_size)
+            throw std::out_of_range("vector::at");
+        return (this->_data[n]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reference vector<T, Alloc>::at(size_type n) const
+    {
+        if (n >= this->_size)
+            throw std::out_of_range("vector::at");
+        return (this->_data[n]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::reference vector<T, Alloc>::front()
+    {
+        return (this->_data[0]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reference vector<T, Alloc>::front() const
+    {
+        return (this->_data[0]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::reference vector<T, Alloc>::back()
+    {
+        return (this->_data[this->_size - 1]);
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reference vector<T, Alloc>::back() const
+    {
+        return (this->_data[this->_size - 1]);
     };
 
     // ITERATORS ====================================================================
