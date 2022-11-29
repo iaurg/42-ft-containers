@@ -7,7 +7,6 @@
 
 namespace ft
 {
-
     // CONSTRUCTORS =================================================================
 
     template <typename T, typename Alloc>
@@ -214,6 +213,61 @@ namespace ft
         return (this->_data[n]);
     };
 
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reference vector<T, Alloc>::operator[](size_type n) const
+    {
+        return (this->_data[n]);
+    };
+
+    // ITERATORS ====================================================================
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::begin()
+    {
+        return (iterator(this->_data));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::begin() const
+    {
+        return (const_iterator(this->_data));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::iterator vector<T, Alloc>::end()
+    {
+        return (iterator(this->_data + this->_size));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_iterator vector<T, Alloc>::end() const
+    {
+        return (const_iterator(this->_data + this->_size));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rbegin()
+    {
+        return (reverse_iterator(this->end()));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rbegin() const
+    {
+        return (const_reverse_iterator(this->end()));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::reverse_iterator vector<T, Alloc>::rend()
+    {
+        return (reverse_iterator(this->begin()));
+    };
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::const_reverse_iterator vector<T, Alloc>::rend() const
+    {
+        return (const_reverse_iterator(this->begin()));
+    };
 }
 
 #endif // ********************************************** VECTOR_TPP end //
