@@ -5,8 +5,8 @@
 #include <memory>
 #include <algorithm>
 #include <cstddef>
-#include <tgmath.h>
 #include "./utils.hpp"
+#include "./iterator.hpp"
 
 namespace ft
 {
@@ -65,12 +65,12 @@ namespace ft
          */
         typedef typename allocator_type::size_type size_type;
 
-        /*
-        typedef typename const_reverse_iterator<value_type>::type const_reverse_iterator;
-        typedef typename reverse_iterator<value_type>::type reverse_iterator;
-        typedef typename const_iterator<value_type>::type const_iterator;
-        typedef typename iterator<value_type>::type iterator;
-        */
+        // ITERATORS =================================================================
+
+        typedef ft::random_access_iterator<pointer> iterator;
+        typedef ft::random_access_iterator<const_pointer> const_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
     protected:
         // ATTRIBUTES =================================================================
@@ -212,6 +212,74 @@ namespace ft
          * @return reference
          */
         reference operator[](size_type n);
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector container.
+         *
+         * @param n
+         * @return const_reference
+         */
+        const_reference operator[](size_type n) const;
+
+        // ITERATORS =============================================================
+
+        /**
+         * @brief Returns an iterator pointing to the first element in the vector.
+         *
+         * @return iterator
+         */
+        iterator begin();
+
+        /**
+         * @brief Returns an iterator referring to the past-the-end element in the vector container.
+         *
+         * @return iterator
+         */
+        iterator end();
+
+        /**
+         * @brief Returns a const_iterator pointing to the first element in the vector.
+         *
+         * @return const_iterator
+         */
+        const_iterator begin() const;
+
+        /**
+         * @brief Returns a const_iterator referring to the past-the-end element in the vector container.
+         *
+         * @return const_iterator
+         */
+        const_iterator end() const;
+
+        /**
+         * @brief Returns a reverse iterator pointing to the last element in the vector (i.e., its reverse beginning).
+         *
+         * @return reverse_iterator
+         */
+        reverse_iterator rbegin();
+
+        /**
+         * @brief Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector
+         * (which is considered its reverse end).
+         *
+         * @return reverse_iterator
+         */
+        reverse_iterator rend();
+
+        /**
+         * @brief Returns a const_reverse_iterator pointing to the last element in the vector (i.e., its reverse beginning).
+         *
+         * @return const_reverse_iterator
+         */
+        const_reverse_iterator rbegin() const;
+
+        /**
+         * @brief Returns a const_reverse_iterator pointing to the theoretical element preceding the first element in the
+         * vector (which is considered its reverse end).
+         *
+         * @return const_reverse_iterator
+         */
+        const_reverse_iterator rend() const;
     };
 
     // OPERATORS =============================================================
