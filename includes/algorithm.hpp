@@ -1,10 +1,6 @@
 #ifndef ALGORITHM_TPP
 #define ALGORITHM_TPP
 
-#include <memory>
-#include <stdexcept>
-#include "vector.hpp"
-
 namespace ft
 {
     /**
