@@ -1,4 +1,4 @@
-#include "../includes/tests.hpp"
+#include "./tests.hpp"
 
 static void default_constructor(void)
 {

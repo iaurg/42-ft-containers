@@ -1,21 +1,19 @@
 #ifndef TESTS_HPP
-# define TESTS_HPP
+#define TESTS_HPP
 
-# include <vector>
-# include <iostream>
-# include "./vector.hpp"
+#include <vector>
+#include <iostream>
+#include "../includes/vector.hpp"
 
+#define RESET "\e[0m"
+#define GREEN "\e[92m"
+#define BLUE "\e[94m"
+#define BOLD "\e[1m"
 
-# define RESET "\e[0m"
-# define GREEN "\e[92m"
-# define BLUE "\e[94m"
-# define BOLD "\e[1m"
+#define GOOD "✓"
+#define FAIL "❌"
 
-
-# define GOOD "✓"
-# define FAIL "❌"
-
-void	test_vector(void);
+void test_vector(void);
 
 inline void print_header(std::string str)
 {
