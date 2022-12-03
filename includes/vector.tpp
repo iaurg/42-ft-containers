@@ -220,6 +220,25 @@ namespace ft
         return begin() + pos;
     };
 
+    template <typename T, typename Alloc>
+    void vector<T, Alloc>::swap(vector &x)
+    {
+        pointer tmp_data = this->_data;
+        size_type tmp_size = this->_size;
+        size_type tmp_capacity = this->_capacity;
+        allocator_type tmp_alloc = this->_alloc;
+
+        this->_data = x._data;
+        this->_size = x._size;
+        this->_capacity = x._capacity;
+        this->_alloc = x._alloc;
+
+        x._data = tmp_data;
+        x._size = tmp_size;
+        x._capacity = tmp_capacity;
+        x._alloc = tmp_alloc;
+    };
+
     // CAPACITY ===============================================================
 
     template <typename T, typename Alloc>

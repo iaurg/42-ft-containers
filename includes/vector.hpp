@@ -218,6 +218,14 @@ namespace ft
          */
         iterator erase(iterator first, iterator last);
 
+        /**
+         * @brief Exchanges the content of the container by the content of x, which is another vector object of the same type.
+         * Sizes may differ.
+         *
+         * @param x
+         */
+        void swap(vector &x);
+
         // CAPACITY ===============================================================
 
         /**
