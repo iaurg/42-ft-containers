@@ -3,10 +3,10 @@
 
 // LIBS ========================================================================
 #include <memory>
-#include <algorithm>
 #include <cstddef>
 #include "./utils.hpp"
 #include "./iterator.hpp"
+#include "./algorithm.hpp"
 
 namespace ft
 {
