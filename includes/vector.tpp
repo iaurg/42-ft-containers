@@ -50,6 +50,22 @@ namespace ft
     };
 
     // OPERATORS ========================================================
+    template <typename T, class Alloc>
+    vector<T, Alloc> &vector<T, Alloc>::operator=(const vector &x)
+    {
+        if (this != &x)
+        {
+            clear();
+            this->_alloc.deallocate(this->_data, this->_capacity);
+            this->_alloc = x._alloc;
+            this->_size = x._size;
+            this->_capacity = x._capacity;
+            this->_data = this->_alloc.allocate(x._size);
+            for (size_type i = 0; i < x._size; i++)
+                this->_alloc.construct(this->_data + i, x._data[i]);
+        }
+        return (*this);
+    };
 
     template <typename T, typename Alloc>
     bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)

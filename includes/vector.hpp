@@ -125,6 +125,14 @@ namespace ft
          */
         ~vector();
 
+        // OPERATORS =============================================================
+
+        /**
+         * @brief Copy all the elements from x into the container (with x preserving its contents).
+         *
+         */
+        vector &operator=(const vector &x);
+
         // MODIFIERS =============================================================
 
         /**
