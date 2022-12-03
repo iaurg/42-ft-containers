@@ -213,6 +213,29 @@ static void assign(void)
 	check("v1 == v2", v1 == v2);
 }
 
+static void swap(void)
+{
+	print_header("Swap");
+	ft::vector<int> v1;
+	std::vector<int> v2;
+	ft::vector<int> v3;
+	std::vector<int> v4;
+	v1.push_back(1);
+	v1.push_back(2);
+	v1.push_back(3);
+	v2.push_back(1);
+	v2.push_back(2);
+	v2.push_back(3);
+	v3.push_back(42);
+	v3.push_back(43);
+	v4.push_back(42);
+	v4.push_back(43);
+	v1.swap(v3);
+	v2.swap(v4);
+	check("v1 == v2", v1 == v2);
+	check("v3 == v4", v3 == v4);
+}
+
 void test_vector(void)
 {
 	print_header("Vector");
@@ -226,5 +249,6 @@ void test_vector(void)
 	assign();
 	insert();
 	erase();
+	swap();
 	operators();
 }
