@@ -49,7 +49,7 @@ namespace ft
         this->_alloc.deallocate(this->_data, this->_capacity);
     };
 
-    // OPERATORS ========================================================
+    // NON MEMBER OVERLOADS =======================================================
     template <typename T, class Alloc>
     vector<T, Alloc> &vector<T, Alloc>::operator=(const vector &x)
     {
@@ -107,6 +107,12 @@ namespace ft
     bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
     {
         return !(lhs < rhs);
+    }
+
+    template <class T, class Alloc>
+    void swap(vector<T, Alloc> &x, vector<T, Alloc> &y)
+    {
+        x.swap(y);
     }
 
     // MODIFIERS ====================================================================
@@ -239,6 +245,14 @@ namespace ft
         x._alloc = tmp_alloc;
     };
 
+    // ALLOCATOR ====================================================================
+
+    template <typename T, typename Alloc>
+    typename vector<T, Alloc>::allocator_type vector<T, Alloc>::get_allocator() const
+    {
+        return this->_alloc;
+    };
+
     // CAPACITY ===============================================================
 
     template <typename T, typename Alloc>
@@ -308,23 +322,6 @@ namespace ft
             this->_alloc.deallocate(this->_data, this->_capacity);
             this->_data = tmp;
             this->_capacity = n;
-        }
-    };
-
-    template <typename T, typename Alloc>
-    void vector<T, Alloc>::shrink_to_fit()
-    {
-        if (this->_size < this->_capacity)
-        {
-            pointer tmp = this->_alloc.allocate(this->_size);
-            for (size_type i = 0; i < this->_size; i++)
-            {
-                this->_alloc.construct(tmp + i, this->_data[i]);
-                this->_alloc.destroy(this->_data + i);
-            }
-            this->_alloc.deallocate(this->_data, this->_capacity);
-            this->_data = tmp;
-            this->_capacity = this->_size;
         }
     };
 

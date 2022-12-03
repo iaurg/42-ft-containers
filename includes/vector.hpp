@@ -82,14 +82,14 @@ namespace ft
         // CONSTRUCTORS ==========================================================
     public:
         /**
-         * @brief Default Construct a new vector object
+         * @brief Constructs an empty container, with no elements.
          *
          * @param alloc
          */
         explicit vector(const allocator_type &alloc = allocator_type());
 
         /**
-         * @brief Fill Construct a new vector object
+         * @brief Constructs a container with n elements. Each element is a copy of val.
          *
          * @param n
          * @param val
@@ -98,7 +98,9 @@ namespace ft
         explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());
 
         /**
-         * @brief Range Construct a new vector object
+         * @brief Constructs a container with as many elements as the range [first,last),
+         * with each element constructed from its corresponding element in that range,
+         * in the same order.
          *
          * @param first
          * @param last
@@ -111,7 +113,7 @@ namespace ft
         vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
 
         /**
-         * @brief Copy Construct a new vector object
+         * @brief Constructs a container with a copy of each of the elements in x, in the same order.
          *
          * @param x
          */
@@ -120,7 +122,7 @@ namespace ft
         // DESTRUCTOR =============================================================
 
         /**
-         * @brief Destroy the vector object
+         * @brief Destroys the container object.
          *
          */
         ~vector();
@@ -128,10 +130,171 @@ namespace ft
         // OPERATORS =============================================================
 
         /**
-         * @brief Copy all the elements from x into the container (with x preserving its contents).
+         * @brief  Assigns new contents to the container, replacing its current contents,
+         * and modifying its size accordingly.
          *
          */
         vector &operator=(const vector &x);
+
+        // ITERATORS =============================================================
+
+        /**
+         * @brief Returns an iterator pointing to the first element in the vector.
+         *
+         * @return iterator
+         */
+        iterator begin();
+
+        /**
+         * @brief Returns a const_iterator pointing to the first element in the vector.
+         *
+         * @return const_iterator
+         */
+        const_iterator begin() const;
+
+        /**
+         * @brief Returns an iterator referring to the past-the-end element in the vector container.
+         *
+         * @return iterator
+         */
+        iterator end();
+
+        /**
+         * @brief Returns a const_iterator referring to the past-the-end element in the vector container.
+         *
+         * @return const_iterator
+         */
+        const_iterator end() const;
+
+        /**
+         * @brief Returns a reverse iterator pointing to the last element in the vector (i.e., its reverse beginning).
+         *
+         * @return reverse_iterator
+         */
+        reverse_iterator rbegin();
+
+        /**
+         * @brief Returns a const_reverse_iterator pointing to the last element in the vector (i.e., its reverse beginning).
+         *
+         * @return const_reverse_iterator
+         */
+        const_reverse_iterator rbegin() const;
+
+        /**
+         * @brief Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector
+         * (which is considered its reverse end).
+         *
+         * @return reverse_iterator
+         */
+        reverse_iterator rend();
+
+        /**
+         * @brief Returns a const_reverse_iterator pointing to the theoretical element preceding the first element in the
+         * vector (which is considered its reverse end).
+         *
+         * @return const_reverse_iterator
+         */
+        const_reverse_iterator rend() const;
+
+        // CAPACITY ===============================================================
+
+        /**
+         * @brief Returns the number of elements in the vector.
+         *
+         */
+        size_type size() const;
+
+        /**
+         * @brief Returns the maximum number of elements that the vector can hold.
+         *
+         */
+        size_type max_size() const;
+
+        /**
+         * @brief Resizes the container so that it contains n elements.
+         *
+         */
+        void resize(size_type n, value_type val = value_type());
+
+        /**
+         * @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
+         *
+         */
+        size_type capacity() const;
+
+        /**
+         * @brief Returns whether the vector is empty (i.e. whether its size is 0).
+         */
+        bool empty(void) const;
+
+        /**
+         * @brief  Requests that the vector capacity be at least enough to contain n elements.
+         *
+         * @param n
+         */
+        void reserve(size_type n);
+
+        // ELEMENT ACCESS =============================================================
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector container.
+         *
+         * @param n
+         * @return reference
+         */
+        reference operator[](size_type n);
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector container.
+         *
+         * @param n
+         * @return const_reference
+         */
+        const_reference operator[](size_type n) const;
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector.
+         *
+         * @param n
+         * @return reference
+         */
+        reference at(size_type n);
+
+        /**
+         * @brief Returns a reference to the element at position n in the vector.
+         *
+         * @param n
+         * @return const_reference
+         */
+        const_reference at(size_type n) const;
+
+        /**
+         * @brief Returns a reference to the first element in the vector.
+         *
+         * @return reference
+         */
+        reference front();
+
+        /**
+         * @brief Returns a reference to the first element in the vector.
+         *
+         * @return const_reference
+         */
+        const_reference front() const;
+
+        /**
+         * @brief Returns a reference to the last element in the vector.
+         *
+         * @return reference
+         */
+        reference back();
+
+        /**
+         * @brief Returns a reference to the last element in the vector.
+         *
+         * @return const_reference
+         */
+        const_reference back() const;
 
         // MODIFIERS =============================================================
 
@@ -226,148 +389,22 @@ namespace ft
          */
         void swap(vector &x);
 
-        // CAPACITY ===============================================================
-
         /**
-         * @brief Return the number of elements that the vector has
-         *
-         */
-        size_type size() const;
-
-        /**
-         * @brief Return maximum size
-         *
-         */
-        size_type max_size() const;
-
-        /**
-         * @brief Resizes the container so that it contains n elements.
-         *
-         */
-        void resize(size_type n, value_type val = value_type());
-
-        /**
-         * @brief Return the number of elements that the vector can hold before needing to allocate more memory.
-         *
-         */
-        size_type capacity() const;
-
-        /**
-         * @brief Checks if the container has no elements, i.e. whether begin() == end().
-         */
-        bool empty(void) const;
-
-        /**
-         * @brief Requests that the vector capacity be at least enough to contain n elements.
-         *
-         * @param n
-         */
-        void reserve(size_type n);
-
-        /**
-         * @brief  Requests the container to reduce its capacity to fit its size.
-         *
-         */
-        void shrink_to_fit();
-
-        /**
-         * @brief Erases all elements from the vector.
+         * @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
          *
          */
         void clear();
 
-        // ACCESSORS =============================================================
-
+        // ALLOCATOR =============================================================
         /**
-         * @brief Returns a reference to the element at position n in the vector container.
+         * @brief Returns a copy of the allocator object associated with the vector.
          *
-         * @param n
-         * @return reference
+         * @return allocator_type
          */
-        reference operator[](size_type n);
-
-        /**
-         * @brief Returns a reference to the element at position n in the vector container.
-         *
-         * @param n
-         * @return const_reference
-         */
-        const_reference operator[](size_type n) const;
-
-        reference at(size_type n);
-
-        const_reference at(size_type n) const;
-
-        reference front();
-
-        const_reference front() const;
-
-        reference back();
-
-        const_reference back() const;
-
-        // ITERATORS =============================================================
-
-        /**
-         * @brief Returns an iterator pointing to the first element in the vector.
-         *
-         * @return iterator
-         */
-        iterator begin();
-
-        /**
-         * @brief Returns an iterator referring to the past-the-end element in the vector container.
-         *
-         * @return iterator
-         */
-        iterator end();
-
-        /**
-         * @brief Returns a const_iterator pointing to the first element in the vector.
-         *
-         * @return const_iterator
-         */
-        const_iterator begin() const;
-
-        /**
-         * @brief Returns a const_iterator referring to the past-the-end element in the vector container.
-         *
-         * @return const_iterator
-         */
-        const_iterator end() const;
-
-        /**
-         * @brief Returns a reverse iterator pointing to the last element in the vector (i.e., its reverse beginning).
-         *
-         * @return reverse_iterator
-         */
-        reverse_iterator rbegin();
-
-        /**
-         * @brief Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector
-         * (which is considered its reverse end).
-         *
-         * @return reverse_iterator
-         */
-        reverse_iterator rend();
-
-        /**
-         * @brief Returns a const_reverse_iterator pointing to the last element in the vector (i.e., its reverse beginning).
-         *
-         * @return const_reverse_iterator
-         */
-        const_reverse_iterator rbegin() const;
-
-        /**
-         * @brief Returns a const_reverse_iterator pointing to the theoretical element preceding the first element in the
-         * vector (which is considered its reverse end).
-         *
-         * @return const_reverse_iterator
-         */
-        const_reverse_iterator rend() const;
+        allocator_type get_allocator() const;
     };
 
-    // OPERATORS =============================================================
+    // NON MEMBER OVERLOADS ======================================================
 
     /**
      * @brief Check if lhs is equal to rhs
@@ -410,6 +447,15 @@ namespace ft
      */
     template <typename T, typename Alloc>
     bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+    /**
+     * @brief  The contents of container x are exchanged with those of y.
+     * Both container objects must be of the same type (same template parameters),
+     * although sizes may differ.
+     *
+     */
+    template <typename T, typename Alloc>
+    void swap(vector<T, Alloc> &X, vector<T, Alloc> &Y);
 
 } // namespace ft
 
