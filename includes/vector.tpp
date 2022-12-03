@@ -146,18 +146,28 @@ namespace ft
             push_back(val);
     };
 
+    template <typename T, typename Alloc>
+    template <typename InputIterator>
+    void vector<T, Alloc>::assign(InputIterator first, InputIterator last)
+    {
+        clear();
+        reserve(last - first);
+        for (InputIterator it = first; it != last; it++)
+            push_back(*it);
+    };
+
     template <typename T, class Alloc>
     typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type &val)
     {
-        size_type index = position - begin();
-        if (this->_size == this->_capacity)
-            reserve(this->_capacity == 0 ? 1 : this->_capacity * 2);
-        this->_alloc.construct(this->_data + this->_size, this->_data[this->_size - 1]);
-        for (size_type i = this->_size - 1; i > index; i--)
-            this->_data[i] = this->_data[i - 1];
-        this->_data[index] = val;
-        this->_size++;
-        return begin() + index;
+        size_type pos = position - begin();
+
+        if (_size == _capacity)
+            reserve(_capacity + 1);
+        for (size_type i = _size; i > pos; i--)
+            _alloc.construct(_data + i, _data[i - 1]);
+        _alloc.construct(_data + pos, val);
+        _size++;
+        return begin() + pos;
     };
 
     template <typename T, typename Alloc>
@@ -269,15 +279,16 @@ namespace ft
     {
         if (n > this->_capacity)
         {
-            this->_capacity = n;
-            pointer tmp = this->_alloc.allocate(this->_capacity);
+            pointer tmp = this->_alloc.allocate(n);
+            if (tmp == NULL)
+                throw std::bad_alloc();
             for (size_type i = 0; i < this->_size; i++)
-            {
                 this->_alloc.construct(tmp + i, this->_data[i]);
+            for (size_type i = 0; i < this->_size; i++)
                 this->_alloc.destroy(this->_data + i);
-            }
-            this->_alloc.deallocate(this->_data, this->_size);
+            this->_alloc.deallocate(this->_data, this->_capacity);
             this->_data = tmp;
+            this->_capacity = n;
         }
     };
 
