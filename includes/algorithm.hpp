@@ -1,5 +1,5 @@
-#ifndef ALGORITHM_TPP
-#define ALGORITHM_TPP
+#ifndef ALGORITHM_HPP
+#define ALGORITHM_HPP
 
 namespace ft
 {
@@ -96,4 +96,4 @@ namespace ft
     }
 }
 
-#endif // ********************************************** ALGORITHM_TPP end //
+#endif // ********************************************** ALGORITHM_HPP end //
