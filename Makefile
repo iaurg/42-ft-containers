@@ -1,39 +1,36 @@
-CONTAINER = main
+NAME = ft_container
 
-CC = c++
-
+CC = @c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
-REMOVE = rm -rf
+SOURCES = ./tests/main.cpp ./tests/vector.cpp
 
-SOURCES_PATH = $(PWD)/tests
+# Use same files from sources, but change .c to .o
+OBJECTS = ${SOURCES:.cpp=.o}
 
-SOURCE_FILES =	$(shell ls ./tests | grep .cpp$)
+# @ supress commands to show in terminal
+RM = @rm -f
 
-SOURCES = $(addprefix $(SOURCES_PATH)/,$(SOURCE_FILES))
+MSG1 = @echo "Compiled ✔︎"
+MSG2 = @echo "Cleaned ✔︎"
 
-OBJECTS = ${SOURCES:%.cpp=%.o}
+all: $(NAME)
 
-RM = rm -f
+$(NAME): $(OBJECTS) $(SOURCES)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+	$(MSG1)
 
-all: $(CONTAINER)
-
-$(CONTAINER):  $(OBJECTS)
-	$(CC) $(CFLAGS) -w $(OBJECTS) -o $(CONTAINER)
-
-./tests/%.o: ./tests/%.cpp
-	${CC} ${CFLAGS} -c $< -o $@
-
-vector: $(CONTAINER)
-	./$(CONTAINER) vector
-
-re:	fclean all
-
+# Clean generated .o files
 clean:
-	@$(REMOVE) $(OBJECTS)
+	${RM} ${OBJECTS} ${BONUS_OBJECTS}
+	${MSG2}
 
+# Force clean all files generated on all
 fclean: clean
-	@$(REMOVE) $(NAME)
-	@$(REMOVE) $(CONTAINER)
+	${RM} ${NAME}
 
-.PHONY: all run ${CONTAINER} re fclean clean
+# Regenarate compilation
+re: fclean all
+
+# phony will run, independent from the state of the file system, avoid make in files with same name
+.PHONY: all clean fclean re
