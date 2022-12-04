@@ -31,3 +31,8 @@ Associative containers compare objects for equivalence, which is slightly differ
 
 [Stepanov Papers STL](https://web.archive.org/web/20160811224408/http://www.stepanovpapers.com/butler.hpl.hp/stl/stl/)
 Thanks @vcwild for the link
+
+### Good resources
+
+[Maps in C++ - The Cherno Youtube](https://www.youtube.com/watch?v=KiB0vRi2wlc)
+[Vector in C++ - The Cherno Youtube](https://www.youtube.com/watch?v=ryRf4Jh_YC0)
