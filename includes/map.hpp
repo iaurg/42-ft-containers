@@ -3,12 +3,25 @@
 
 #include <memory>
 #include <functional>
-
+#include "tree.hpp"
+#include "reverse_iterator.hpp"
+#include "iterator_traits.hpp"
+#include "pair.hpp"
 namespace ft
 {
     template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T> > >
     class map
     {
+        // TREE NODE ===========================================================
+
+    private:
+        typedef ft::tree<std::pair<const Key, T>, Compare, Alloc> _tree;
+        typedef typename _tree::iterator _tree_iterator;
+        typedef typename _tree::const_iterator _tree_const_iterator;
+        typedef ft::reverse_iterator<_tree_iterator> reverse_iterator;
+        typedef ft::reverse_iterator<_tree_const_iterator> const_reverse_iterator;
+        typedef typename ft::iterator_traits<_tree_iterator>::difference_type difference_type;
+
     public:
         // MEMBER TYPES ========================================================
         typedef Key key_type;
@@ -20,9 +33,27 @@ namespace ft
         typedef typename allocator_type::const_reference const_reference;
         typedef typename allocator_type::pointer pointer;
         typedef typename allocator_type::const_pointer const_pointer;
-        typedef typename allocator_type::difference_type difference_type;
         typedef typename allocator_type::size_type size_type;
+        // typedef typename allocator_type::difference_type difference_type;
 
+        // MEMBER CLASSES ======================================================
+
+        class value_compare : public std::binary_function<value_type, value_type, bool>
+        {
+            friend class map<Key, T, Compare, Alloc>;
+
+        protected:
+            Compare comp;
+            explicit value_compare(Compare c) : comp(c) {}
+
+        public:
+            bool operator()(const value_type &x, const value_type &y) const
+            {
+                return comp(x.first, y.first);
+            }
+        };
+
+    public:
         // MEMBER FUNCTIONS ====================================================
 
         /**
@@ -62,25 +93,25 @@ namespace ft
          * @brief Returns an iterator referring to the first element in the map container.
          *
          */
-        iterator begin();
+        _tree_iterator begin();
 
         /**
          * @brief Returns an iterator referring to the past-the-end element in the map container.
          *
          */
-        iterator end();
+        _tree_iterator end();
 
         /**
-         * @brief Returns a const_iterator referring to the first element in the map container.
+         * @brief Returns a _tree_const_iterator referring to the first element in the map container.
          *
          */
-        const_iterator begin() const;
+        _tree_const_iterator begin() const;
 
         /**
-         * @brief Returns a const_iterator referring to the past-the-end element in the map container.
+         * @brief Returns a _tree_const_iterator referring to the past-the-end element in the map container.
          *
          */
-        const_iterator end() const;
+        _tree_const_iterator end() const;
 
         /**
          * @brief Returns a reverse_iterator pointing to the last element in the map container.
@@ -142,14 +173,13 @@ namespace ft
          * @brief Inserts an element into the map container, if the container doesn't already contain an element with an equivalent key.
          *
          */
-        // TODO IMPLEMENT FT::PAIR
-        std::pair<iterator, bool> insert(const value_type &val);
+        ft::pair<_tree_iterator, bool> insert(const value_type &val);
 
         /**
          * @brief Inserts an element into the map container, if the container doesn't already contain an element with an equivalent key.
          *
          */
-        iterator insert(iterator position, const value_type &val);
+        _tree_iterator insert(_tree_iterator position, const value_type &val);
 
         /**
          * @brief Inserts elements from range [first,last) into the map.
@@ -162,7 +192,7 @@ namespace ft
          * @brief Erases an element from the map container.
          *
          */
-        void erase(iterator position);
+        void erase(_tree_iterator position);
 
         /**
          * @brief Erases an element from the map container.
@@ -174,7 +204,7 @@ namespace ft
          * @brief Erases elements from the map container.
          *
          */
-        void erase(iterator first, iterator last);
+        void erase(_tree_iterator first, _tree_iterator last);
 
         /**
          * @brief Exchanges the content of the container by the content of x, which is another map of the same type. Sizes may differ.
@@ -210,14 +240,14 @@ namespace ft
          * an iterator to it if found, otherwise it returns an iterator to map::end.
          *
          */
-        iterator find(const key_type &k);
+        _tree_iterator find(const key_type &k);
 
         /**
          * @brief Searches the container for an element with a key equivalent to k and returns
          * an iterator to it if found, otherwise it returns an iterator to map::end.
          *
          */
-        const_iterator find(const key_type &k) const;
+        _tree_const_iterator find(const key_type &k) const;
 
         /**
          * @brief Searches the container for elements with a key equivalent to k and returns
@@ -231,44 +261,42 @@ namespace ft
          * is not considered to go before k (i.e., either it is equivalent or goes after).
          *
          */
-        iterator lower_bound(const key_type &k);
+        _tree_iterator lower_bound(const key_type &k);
 
         /**
          * @brief Returns an iterator pointing to the first element in the container whose key
          * is not considered to go before k (i.e., either it is equivalent or goes after).
          *
          */
-        const_iterator lower_bound(const key_type &k) const;
+        _tree_const_iterator lower_bound(const key_type &k) const;
 
         /**
          * @brief Returns an iterator pointing to the first element in the container whose key
          * is considered to go after k.
          *
          */
-        iterator upper_bound(const key_type &k);
+        _tree_iterator upper_bound(const key_type &k);
 
         /**
          * @brief Returns an iterator pointing to the first element in the container whose key
          * is considered to go after k.
          *
          */
-        const_iterator upper_bound(const key_type &k) const;
+        _tree_const_iterator upper_bound(const key_type &k) const;
 
         /**
          * @brief Returns the bounds of a range that includes all the elements in the container
          * which have a key equivalent to k.
          *
          */
-        // TODO IMPLEMENT FT::PAIR
-        std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const;
+        ft::pair<_tree_const_iterator, _tree_const_iterator> equal_range(const key_type &k) const;
 
         /**
          * @brief Returns the bounds of a range that includes all the elements in the container
          * which have a key equivalent to k.
          *
          */
-        // TODO IMPLEMENT FT::PAIR
-        std::pair<iterator, iterator> equal_range(const key_type &k);
+        ft::pair<_tree_iterator, _tree_iterator> equal_range(const key_type &k);
 
         // ALLOCATOR ===========================================================
 
