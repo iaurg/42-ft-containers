@@ -1,9 +1,9 @@
 NAME = ft_container
 
-CC = @c++
+CC = @clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
 
-SOURCES = ./tests/main.cpp ./tests/vector.cpp
+SOURCES = ./tests/main.cpp ./tests/vector.cpp ./tests/map.cpp
 
 # Use same files from sources, but change .c to .o
 OBJECTS = ${SOURCES:.cpp=.o}

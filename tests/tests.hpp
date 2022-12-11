@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "../includes/vector.hpp"
+#include "../includes/map.hpp"
 
 #define RESET "\e[0m"
 #define GREEN "\e[92m"
@@ -14,6 +15,7 @@
 #define FAIL "❌"
 
 void test_vector(void);
+void test_map(void);
 
 inline void print_header(std::string str)
 {

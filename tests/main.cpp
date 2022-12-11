@@ -12,9 +12,12 @@ int main(int argc, char **argv)
 		choice = std::string(argv[1]);
 	if (choice == "vector")
 		test_vector();
+	else if (choice == "map")
+		test_map();
 	else if (choice == "all")
 	{
 		test_vector();
+		test_map();
 	}
 	else
 		std::cout << "No test for " << choice << std::endl;
